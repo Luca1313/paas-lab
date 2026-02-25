@@ -1,4 +1,4 @@
-from openai_client import client
+from paas_lab.utils.openai_client import client
 
 
 def ask(question: str, system_prompt: str = None, temperature = None, max_tokens = None) -> str:

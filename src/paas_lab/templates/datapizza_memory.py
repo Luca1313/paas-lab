@@ -1,6 +1,6 @@
 from datapizza.memory import Memory
 from datapizza.type import TextBlock, ROLE
-from openai_client import client
+from paas_lab.utils.openai_client import client
 
 
 def ask(question: str, prompts=None, system_prompt: str = None, temperature = None, max_tokens = None) -> str:

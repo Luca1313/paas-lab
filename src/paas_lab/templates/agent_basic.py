@@ -1,7 +1,7 @@
 from datapizza.agents import Agent
 from datapizza.tools import tool
 
-from openai_client import client
+from paas_lab.utils.openai_client import client
 from weather.weather_service import get_weather as _get_weather
 
 
