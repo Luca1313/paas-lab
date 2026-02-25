@@ -1,0 +1,28 @@
+[project]
+name = "paas-lab"
+version = "0.1.0"
+description = "Lab for experimental multi agent deployment"
+authors = [
+    {name = "Luca Rubboli",email = "luca.rubboli@libero.it"}
+]
+readme = "README.md"
+requires-python = ">=3.12,<3.14"
+
+[tool.poetry]
+name = "paas-lab"
+version = "0.1.0"
+description = "Lab for experimental multi agent deployment"
+authors = ["Luca Rubboli <luca.rubboli@libero.it>"]
+readme = "README.md"
+packages = [{ include = "paas_lab", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.14"
+datapizza-ai = ">=0.0.9,<0.0.10"
+kaggle = ">=2.0.0,<3.0.0"
+openai = ">=2.24.0,<3.0.0"
+python-dotenv = ">=1.2.1,<2.0.0"
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
