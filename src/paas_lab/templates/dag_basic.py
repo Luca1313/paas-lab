@@ -3,7 +3,7 @@ from datapizza.modules.rewriters import ToolRewriter
 from datapizza.pipeline import DagPipeline
 from datapizza.vectorstores.qdrant import QdrantVectorstore
 
-from openai_client import client, embedder
+from paas_lab.utils.openai_client import client, embedder
 
 dag_pipeline = DagPipeline()
 dag_pipeline.add_module("rewriter", ToolRewriter(client=client, system_prompt="Rewrite user queries to improve retrieval accuracy."))

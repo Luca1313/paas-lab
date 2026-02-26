@@ -1,6 +1,6 @@
 import asyncio
 
-from openai_client import client
+from paas_lab.utils.openai_client import client
 
 async def a_ask(question: str, system_prompt: str = None, temperature = None, max_tokens = None) -> str:
     response = await client.a_invoke(
