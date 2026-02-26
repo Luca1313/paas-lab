@@ -1,0 +1,44 @@
+
+clients:
+  cohere_embedder:
+    type: CohereEmbedder
+    module: datapizza.embedders.cohere
+    params:
+      api_key: "${COHERE_API_KEY}"
+      base_url: "${COHERE_ENDPOINT}"
+      model_name: "embed-v4.0"
+      input_type: "search_document"
+
+modules:
+  # Parser: Extract content from PDF
+  - type: DoclingParser
+    module: datapizza.modules.parsers.docling
+    params: {}
+
+  # Splitter: Chunk content in pieces
+  - type: RecursiveSplitter
+    module: datapizza.modules.splitters
+    params:
+      max_char: 2000
+      overlap: 100
+
+  # Embedder: Generate vector for each chunk
+  - type: ChunkEmbedder
+    module: datapizza.embedders
+    params:
+      client: cohere_embedder
+      embedding_name: "embedding_vector"
+
+vector_store:
+  type: QdrantVectorstore
+  module: datapizza.vectorstores.qdrant
+  params:
+    host: "${QDRANT_HOST}"
+    api_key: "${QDRANT_API_KEY}"
+  collection_config:
+    collection_name: "tutorial_ingestion"
+    vector_config:
+      - dimensions: 1536 # Must match embedding model output
+        name: "embedding_vector"
+
+collection_name: "tutorial_ingestion"

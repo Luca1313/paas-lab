@@ -1,5 +1,6 @@
 from datapizza.memory import Memory
 from datapizza.type import TextBlock, ROLE
+
 from paas_lab.utils.openai_client import client
 
 

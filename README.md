@@ -50,6 +50,27 @@ poetry run kaggle competitions download -c my-competition
 
 A `.env` file must be provided, following the `.env-example`
 
+### Qdrant
+
+To enable local Qdrant run set flag in `.env` file and run container with
+
+```bash
+docker run -d \
+  --name qdrant \
+  --restart unless-stopped \
+  -p 6333:6333 \
+  -p 6334:6334 \
+  -v qdrant_storage:/qdrant/storage \
+  -e QDRANT__SERVICE__GRPC_PORT=6334 \
+  qdrant/qdrant:latest
+```
+
+To run qdrant via API build the cluster and set up keys in `.env` file
+
+### Cohere
+
+Get API keys from [Cohere](https://dashboard.cohere.com/api-keys)
+
 ### Dependencies
 
 Dependencies can be installed through
