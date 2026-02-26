@@ -8,7 +8,7 @@ load_dotenv()
 GPT_MODEL = "gpt-4o-mini"
 OPENAI_KEY = os.getenv('OPENAI_KEY')
 
-client = OpenAIClient(
+openai_client = OpenAIClient(
     api_key=OPENAI_KEY,
     model=GPT_MODEL,
     #system_prompt="You are a helpful assistant",
