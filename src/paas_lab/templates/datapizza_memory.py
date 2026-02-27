@@ -4,7 +4,13 @@ from datapizza.type import TextBlock, ROLE
 from paas_lab.utils.openai_client import client
 
 
-def ask(question: str, prompts=None, system_prompt: str = None, temperature = None, max_tokens = None) -> str:
+def ask(
+    question: str,
+    prompts=None,
+    system_prompt: str = None,
+    temperature=None,
+    max_tokens=None,
+) -> str:
     if prompts is not None:
         memory = Memory()
         for prompt in prompts:
@@ -17,15 +23,16 @@ def ask(question: str, prompts=None, system_prompt: str = None, temperature = No
             temperature=temperature,
             max_tokens=max_tokens,
             system_prompt=system_prompt,
-            memory=memory
+            memory=memory,
         ).text
     else:
         return client.invoke(
             input=question,
             temperature=temperature,
             max_tokens=max_tokens,
-            system_prompt=system_prompt
+            system_prompt=system_prompt,
         ).text
+
 
 def main():
     answer = ask(
@@ -33,10 +40,10 @@ def main():
         prompts=[
             "My name is Francesco",
         ],
-        max_tokens=50
+        max_tokens=50,
     )
     print(answer)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

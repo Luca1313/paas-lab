@@ -6,10 +6,27 @@ from datapizza.vectorstores.qdrant import QdrantVectorstore
 from paas_lab.utils.openai_client import client, embedder
 
 dag_pipeline = DagPipeline()
-dag_pipeline.add_module("rewriter", ToolRewriter(client=client, system_prompt="Rewrite user queries to improve retrieval accuracy."))
+dag_pipeline.add_module(
+    "rewriter",
+    ToolRewriter(
+        client=client,
+        system_prompt="Rewrite user queries to improve retrieval accuracy.",
+    ),
+)
 dag_pipeline.add_module("embedder", embedder)
-dag_pipeline.add_module("retriever", QdrantVectorstore(host="localhost", port=6333).as_retriever(collection_name="my_documents", k=5))
-dag_pipeline.add_module("prompt", ChatPromptTemplate(user_prompt_template="User question: {{user_prompt}}\n:", retrieval_prompt_template="Retrieved content:\n{% for chunk in chunks %}{{ chunk.text }}\n{% endfor %}"))
+dag_pipeline.add_module(
+    "retriever",
+    QdrantVectorstore(host="localhost", port=6333).as_retriever(
+        collection_name="my_documents", k=5
+    ),
+)
+dag_pipeline.add_module(
+    "prompt",
+    ChatPromptTemplate(
+        user_prompt_template="User question: {{user_prompt}}\n:",
+        retrieval_prompt_template="Retrieved content:\n{% for chunk in chunks %}{{ chunk.text }}\n{% endfor %}",
+    ),
+)
 dag_pipeline.add_module("generator", client)
 
 dag_pipeline.connect("rewriter", "embedder", target_key="text")
@@ -18,11 +35,13 @@ dag_pipeline.connect("retriever", "prompt", target_key="chunks")
 dag_pipeline.connect("prompt", "generator", target_key="memory")
 
 query = "tell me something about this document"
-result = dag_pipeline.run({
-    "rewriter": {"user_prompt": query},
-    "prompt": {"user_prompt": query},
-    "retriever": {"collection_name": "my_documents", "k": 3},
-    "generator":{"input": query}
-})
+result = dag_pipeline.run(
+    {
+        "rewriter": {"user_prompt": query},
+        "prompt": {"user_prompt": query},
+        "retriever": {"collection_name": "my_documents", "k": 3},
+        "generator": {"input": query},
+    }
+)
 
 print(f"Generated response: {result['generator']}")

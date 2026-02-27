@@ -18,20 +18,22 @@ embedder = ChunkEmbedder(
         api_key=os.getenv("COHERE_API_KEY"),
         base_url=os.getenv("COHERE_ENDPOINT"),
         model_name="embed-v4.0",
-        input_type='search_document',
+        input_type="search_document",
     ),
-    embedding_name='embedding_vector'
+    embedding_name="embedding_vector",
 )
 
 qdrant_vectorstore.create_collection(
-    collection_name='tutorial_ingestion',
-    vector_config=[VectorConfig(dimensions=1536, name='embedding_vector')]
+    collection_name="tutorial_ingestion",
+    vector_config=[VectorConfig(dimensions=1536, name="embedding_vector")],
 )
 
 pipeline = IngestionPipeline(
     modules=[parser, splitter, embedder],
     vector_store=qdrant_vectorstore,
-    collection_name='tutorial_ingestion',
+    collection_name="tutorial_ingestion",
 )
 
-pipeline.run(file_path='old-dataset/Hackapizza Dataset/Codice Galattico/Codice Galattico.pdf')
+pipeline.run(
+    file_path="old-dataset/Hackapizza Dataset/Codice Galattico/Codice Galattico.pdf"
+)

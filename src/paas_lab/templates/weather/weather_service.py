@@ -1,7 +1,7 @@
 import json
 import urllib.request
+from datetime import datetime
 from urllib.parse import quote
-from datetime import datetime, timedelta
 
 
 def get_weekly_weather(location: str) -> str:
